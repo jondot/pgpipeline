@@ -44,9 +44,11 @@ class PgPipeline(object):
                 if res is not None:
                     # remove keys with none value
                     selected = dict((k, v) for k, v in item.iteritems() if v)
-
-                self.table.upsert(
-                    selected, self.ignore_identical, types=self.types)
+                    self.table.upsert(
+                        selected, self.ignore_identical, types=self.types)
+                else:
+                    self.table.insert(
+                        selected, self.ignore_identical, types=self.types)
             else:
                 raise Exception("no such strategy: %s" % (self.onconflict))
 
